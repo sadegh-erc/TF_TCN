@@ -8,6 +8,9 @@ import argparse
 import numpy as np
 import tensorflow as tf
 import time
+import os
+from slackclient import SlackClient
+
 
 parser = argparse.ArgumentParser(description='Sequence Modeling - (Permuted) Sequential MNIST')
 parser.add_argument('--batch_size', type=int, default=64, metavar='N',
@@ -37,7 +40,11 @@ parser.add_argument('--permute', action='store_true',
 args = parser.parse_args()
 print(args)
 
-DATA_PATH = "/home/jimisv/yuanting/TF_TCN/mnist_pixel/MNIST_data/"
+SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
+sc = SlackClient(SLACK_BOT_TOKEN)
+sc.api_call("chat.postMessage", channel="CFBF67MRT", text="Token received")
+
+DATA_PATH = "../mnist_pixel/MNIST_data/"
 batch_size = args.batch_size
 n_classes = 10
 in_channels = 1
